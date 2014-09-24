@@ -73,3 +73,6 @@ done
 
 # Make Grunt print stack traces by default
 command -v grunt > /dev/null && alias grunt="grunt --stack"
+
+# Open Sublime Text on current folder
+alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
