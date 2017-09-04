@@ -1,0 +1,174 @@
+[user]
+	name = Marcos Moura
+	email = marcosvmmoura@gmail.com
+
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
+[alias]
+  # View abbreviated SHA, description, and history graph of the latest 20 commits
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+
+  # View the current working tree status using the short format
+  s = status
+  ss = status -s
+
+  # Show the diff between the latest commit and the current state
+  d = !"git diff-index --quiet HEAD -- || clear; git diff --patch-with-stat"
+
+  # Pull in remote changes for the current repository and all its submodules
+  p = !"git pull; git submodule foreach git pull origin master"
+
+  # Push to origin
+  po = push origin HEAD
+
+  # Clone a repository including all submodules
+  c = clone --recursive
+
+  # Commit all changes
+  ca = !git add -A && git commit -m
+
+  # Switch to a branch, creating it if necessary
+  go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+
+  # Amend the currently staged files to the latest commit
+  amend = commit --amend --reuse-message=HEAD
+
+  # Credit an author on the latest commit
+  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+  # Create BitBucket PR
+  pr = bb pull-request --yes
+
+  # Find branches containing commit
+  fb = "!f() { git branch -a --contains $1; }; f"
+
+  # Find commits by source code
+  fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+  # Find commits by commit message
+  fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+  # Remove branches that have already been merged with master
+  # a.k.a. ‘delete merged’
+  dm = "!git branch --merged | egrep -v '(master|release|develop)' | xargs -n 1 git branch -d"
+
+  # List contributors with number of commits
+  contributors = shortlog --summary --numbered
+
+  # Shortcut to commit with message
+  cm = commit -m
+
+  # Shortcut to commit with message
+  m = merge --no-ff
+
+  # Checkout branch
+  ck = checkout
+  ckb = checkout -b
+
+  # Get log graph
+  graph = log --graph
+
+  # Last 10 commits
+  last = log -n 10
+
+  # Discard local changes
+  discard = checkout -- .
+
+  # Show unmerged commits
+  suc = "!f() { git log --oneline --no-merges $1..; }; f"
+
+[apply]
+  whitespace = fix
+
+[push]
+  default = simple
+
+[mergetool]
+  keepTemporaries = false
+  prompt = false
+
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+  tool = meld
+
+[help]
+  autocorrect = 1
+
+[diff]
+  renames = copies
+
+[diff "bin"]
+  textconv = hexdump -v -C
+
+[color]
+	ui = true
+
+[color "status"]
+  added = cyan bold
+  branch = cyan bold
+  changed = magenta bold
+  deleted = red bold
+  untracked = yellow bold
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+	meta = 227
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	commit = 227 bold
+	whitespace = red reverse
+
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+  precomposeunicode = false
+	pager = diff-so-fancy | less --tabs=4 -RFX
+
+[format]
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  graph = true
+
+[advice]
+  statusHints = false
+
+[log]
+  abbrevCommit = true
+
+# URL shorthands
+
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+  insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
