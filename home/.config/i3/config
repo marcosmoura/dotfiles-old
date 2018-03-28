@@ -1,0 +1,336 @@
+##########################################################
+##> Globals
+##########################################################
+
+# Set keys
+set $mod Mod1
+floating_modifier $mod
+
+
+# Disable mouse focus
+focus_follows_mouse no
+
+
+# Font
+font pango:SF Mono 9
+
+
+# Focus on open
+focus_on_window_activation focus
+force_focus_wrapping force
+
+
+##########################################################
+##> Theme
+##########################################################
+
+# Gaps
+bindsym $mod+Shift+g exec sh ~/.config/i3/togglegaps.sh toggle
+gaps inner 20
+smart_borders no_gaps
+workspace 2 gaps inner 0
+workspace 3 gaps inner 0
+workspace 5 gaps inner 0
+workspace 7 gaps inner 0
+
+
+# Borders
+for_window [class=".*"] border pixel 3
+new_window pixel 3
+new_float pixel 3
+
+
+# Colors
+set_from_resource	      $background       background
+set_from_resource       $theme-active     foreground
+set_from_resource       $theme-inactive   trueblack
+
+client.background	      $background
+client.focused          $theme-active   $theme-active   $theme-inactive $theme-active   $theme-active
+client.focused_inactive $theme-inactive $theme-inactive $theme-active   $theme-active   $theme-inactive
+client.unfocused        $theme-inactive $theme-inactive $theme-active   $theme-inactive $theme-inactive
+
+
+
+##########################################################
+##> Key Bindings - Global Key
+##########################################################
+
+# Restart i3 inplace
+bindsym $mod+Ctrl+r restart
+
+
+# Reload i3 config file
+bindsym $mod+Shift+r reload
+
+
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+Escape exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
+
+
+# Open Terminal
+bindsym $mod+Return exec termite
+
+
+# Kill window
+bindsym $mod+Shift+q kill
+
+
+# Lock
+bindsym $mod+shift+l exec "betterlockscreen -l"
+
+
+# Open Rofi
+bindsym $mod+space exec "rofi -modi run,drun,window -show drun"
+bindsym $mod+Ctrl+space exec "rofi -modi run,drun,window -show run"
+bindsym $mod+Ctrl+w exec "rofi -modi run,drun,window -show window"
+
+
+##########################################################
+##> Key Bindings - Focus, Movement and Resize
+##########################################################
+
+# Move focus to tiles
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+
+# Move window around
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+# Resize
+set $resizestep 10 px or 2 ppt
+bindsym $mod+Ctrl+Up resize grow height $resizestep
+bindsym $mod+Ctrl+Right resize grow width $resizestep
+bindsym $mod+Ctrl+Down resize shrink height $resizestep
+bindsym $mod+Ctrl+Left resize shrink width $resizestep
+
+
+##########################################################
+##> Key Bindings - Split and Modes
+##########################################################
+
+# Split in horizontal orientation
+bindsym $mod+h split h
+bindsym $mod+d split h
+
+
+# Split in vertical orientation
+bindsym $mod+v split v
+bindsym $mod+Shift+d split v
+
+
+# Enter fullscreen mode
+bindsym $mod+Shift+f fullscreen toggle
+
+
+# Toggle layouts
+bindsym $mod+Shift+space layout toggle tabbed splith splitv
+
+
+# Tabbed layout
+bindsym $mod+Shift+t layout tabbed
+bindsym $mod+grave exec "~/.config/i3/i3-switch-tabs right"
+bindsym $mod+Shift+grave exec "~/.config/i3/i3-switch-tabs left"
+
+
+# Focus the parent container
+bindsym $mod+Shift+a focus parent
+
+
+# Tiling vs Floating
+bindsym $mod+f floating toggle
+bindsym $mod+t focus mode_toggle
+
+
+##########################################################
+##> Key Bindings - Media
+##########################################################
+
+# Volume
+bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up 3
+bindsym XF86AudioLowerVolume exec pulseaudio-ctl down 3
+bindsym XF86AudioMute exec pulseaudio-ctl mute
+
+
+# Song control
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+
+# Screenshot
+bindsym --release $mod+Shift+4 exec --no-startup-id "maim -s ~/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
+
+
+##########################################################
+##> Key Bindings - Setup Workspaces
+##########################################################
+
+# Change  workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+
+# Move window to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+
+##########################################################
+##> Workspace Rules
+##########################################################
+
+# Always move windows to specific workspaces
+assign [class="Code - Insiders"] → 2
+assign [class="Google-chrome-unstable"] → 3
+assign [class="Nightly"] → 3
+assign [class="Franz"] → 4
+assign [class="Nautilus"] → 6
+assign [class="Gimp"] → 8
+
+for_window [window_role="ws1-logs"] move to workspace 1, move left
+for_window [window_role="ws1-git"] move to workspace 1, move right, resize grow width 20px
+for_window [class="Code - Insiders"] move to workspace 2
+for_window [class="Google-chrome-unstable"] move to workspace 3
+for_window [class="Franz"] move to workspace 4
+for_window [class="Spotify"] move to workspace 5
+for_window [class="Nautilus"] move to workspace 6, move left, move left, split vertical
+for_window [instance="calendar.google.com"] move to workspace 6, move left, move left
+for_window [window_role="ws6-monitor"] move to workspace 6, move right, move right, resize grow width 20px
+for_window [instance="netflix.com"] move to workspace 7
+for_window [class="netflix"] move to workspace 7
+
+
+# Setup floating windows
+for_window [class="Franz"] floating enable, resize set 1200 800
+for_window [class="feh"] floating enable, resize set 1440 900
+for_window [class="Lxappearance"] floating enable, resize set 900 600
+for_window [class="Nitrogen"] floating enable, resize set 900 600
+for_window [class="gucharmap"] floating enable, resize set 900 600
+
+
+##########################################################
+##> Setup Environment
+##########################################################
+
+# Kill all opened environment apps
+exec_always --no-startup-id "killall -q sxhkd polybar compton nitrogen dunst insync redshift-gtk blueberry-tray urserver mopidy"
+exec_always --no-startup-id "sleep 1"
+
+
+# Polybar
+exec_always --no-startup-id "~/.config/polybar/launch.sh"
+
+
+# Set UTF-8
+exec_always --no-startup-id "localectl set-locale LANG=en_US.UTF-8"
+
+
+# Keyboard layout
+exec_always --no-startup-id "xset r rate 300 45"
+exec_always --no-startup-id "setxkbmap us mac"
+
+
+# Mouse Config
+exec_always --no-startup-id "xinput --set-prop 12 'libinput Natural Scrolling Enabled' 1"
+exec_always --no-startup-id "xinput --set-prop 13 'libinput Natural Scrolling Enabled' 1"
+exec_always --no-startup-id "xsetroot -cursor_name left_ptr"
+
+
+# Walpaper
+exec_always --no-startup-id "nitrogen --restore"
+
+
+# Google Drive Daemon
+exec_always --no-startup-id "insync start"
+
+
+# Night Light
+exec_always --no-startup-id "redshift-gtk"
+
+
+# Bluetooth daemon
+exec_always --no-startup-id "blueberry-tray"
+
+
+# Notifications
+exec_always --no-startup-id "dunst -config ~/.config/dunst/config"
+
+
+# Unified Remote
+exec_always --no-startup-id "/opt/urserver/urserver --daemon"
+
+
+# Mopidy + Spotify
+exec_always --no-startup-id "mopidy"
+exec_always --no-startup-id "mpc random on"
+exec_always --no-startup-id "mpc repeat on"
+
+
+# Compton
+exec_always --no-startup-id "compton -c --config ~/.config/compton/config"
+
+
+# Reposition Polybar
+exec_always --no-startup-id "xdo lower $(xdo id -n polybar); xdo raise $(xdo id -n tray)"
+
+
+##########################################################
+##> Setup Initial Apps
+##########################################################
+
+exec --no-startup-id "betterlockscreen -l"
+
+# Workspace 1
+exec "termite -d ~/Projects --role ws1-logs"
+exec "termite -d ~/Projects --role ws1-git"
+
+
+# Workspace 2
+exec code-insiders
+
+
+# Workspace 3
+exec google-chrome-unstable
+
+
+# Workspace 4
+exec franz
+
+
+# Workspace 5
+exec spotify
+
+
+# Workspace 6
+exec nautilus
+exec "google-chrome-unstable --app=http://calendar.google.com"
+exec "LANG=en_US.utf8 TERM=xterm-256color termite -r ws6-monitor -e vtop"
+
+
+# Workspace 7
+exec "google-chrome-unstable --app=http://netflix.com"

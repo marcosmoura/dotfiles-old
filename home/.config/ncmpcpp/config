@@ -1,0 +1,28 @@
+mpd_connection_timeout = "5"
+mpd_crossfade_time = "1"
+system_encoding = "utf-8"
+
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30"
+visualizer_in_stereo = "yes"
+visualizer_type = "spectrum"
+visualizer_look = "●▮"
+
+cyclic_scrolling = "yes"
+song_status_format = "{%a - }{%t - }{%b}"
+
+autocenter_mode = "yes"
+
+progressbar_look = "=● "
+titles_visibility = "no"
+header_visibility = "no"
+statusbar_visibility = "yes"
+enable_window_title = "yes"
+song_columns_list_format = "(35)[]{t} (30)[cyan]{a} (30)[red]{b} (7f)[green]{l}"
+
+
+song_window_title_format = "MPD: {%a > }{%t}|{%f}"
+search_engine_display_mode = "columns" (classic/columns)
+follow_now_playing_lyrics = "yes"
+user_interface = "alternative" (classic/alternative)

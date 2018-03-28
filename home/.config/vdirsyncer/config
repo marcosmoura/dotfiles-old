@@ -1,0 +1,31 @@
+
+# An example configuration for vdirsyncer.
+#
+# Move it to ~/.vdirsyncer/config or ~/.config/vdirsyncer/config and edit it.
+# Run `vdirsyncer --help` for CLI usage.
+#
+# Optional parameters are commented out.
+# This file doesn't document all available parameters, see
+# http://vdirsyncer.pimutils.org/ for the rest of them.
+
+[general]
+# A folder where vdirsyncer can store some metadata about each pair.
+status_path = "~/.config/vdirsyncer/status/"
+
+# caldav
+[pair marcosmoura]
+a = "google_calendar"
+b = "local_calendar"
+collections = ["from a", "from b"]
+metadata = ["displayname"]
+
+[storage local_calendar]
+type = "filesystem"
+path = "~/.config/vdirsyncer/calendars"
+fileext = ".ics"
+
+[storage google_calendar]
+type = "google_calendar"
+token_file = "~/.config/vdirsyncer/token"
+client_id =
+client_secret =

@@ -1,3 +1,0 @@
-updateEnv;
-brew cask install alfred google-chrome-dev postman spotify android-file-transfer imageoptim safari-technology-preview android-platform-tools insomnia the-unarchiver appcleaner iterm2-beta slack  virtualbox firefoxnightly macdown visual-studio-code-insiders font-fira-code moeditor spectacle whatsapp google-chrome-canary opera-developer spectacle-editor;
-brew install colordiff findutils libyaml openssl@1.1 yarn coreutils gdbm mas pcre zsh curl git moreutils thefuck zsh-completions diff-so-fancy gnu-sed node vim zsh-syntax-highlighting exa icu4c openssl wget;

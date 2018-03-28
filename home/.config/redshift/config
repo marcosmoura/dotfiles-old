@@ -1,0 +1,11 @@
+[redshift]
+  dawn-time=09:00
+  dusk-time=23:00
+  temp-day=6000
+  temp-night=3000
+  transition=1
+  location-provider=manual
+
+[manual]
+  lat=-19.922766
+  lon=-43.962985
